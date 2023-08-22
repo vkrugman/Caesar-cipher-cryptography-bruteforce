@@ -2,10 +2,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
-    public static int shift = 3;
-
-    public static final String ORIGINAL_TEXT = "Сделай шаг и дорога появится!";
-    public static final String CIPHER_TEXT = "Фзиогм ыгж л зсусжг тсвелхфв!";
+    public static int shift = -3;
 
     public static final String MENU = """
             Выбери режим работы:
@@ -16,19 +13,20 @@ public class Main {
 
     public static void main(String[] args) {
 
-        try (Scanner scanner = new Scanner(System.in)) {
+
+        try (Scanner scanner = new Scanner(System.in); Scanner text = new Scanner(System.in)) {
 
             while (true) {
                 printText(MENU);
 
                 switch (scanner.nextInt()) {
                     case 1 -> {
-                        String cipher = CaesarCipher.cipher(ORIGINAL_TEXT, shift);
-                        System.out.println(cipher);
-                        System.out.println(CIPHER_TEXT.equals(cipher));
+                        System.out.println("Введи оригинальный текст:");
+                        System.out.println(CaesarCipher.cipher(text.nextLine(), shift));
                     }
                     case 2 -> {
-                        System.out.println(CaesarCipher.decipher(CIPHER_TEXT, shift));
+                        System.out.println("Введи зашифрованный текст:");
+                        System.out.println(CaesarCipher.decipher(text.nextLine(), shift));
                     }
                     case 3 -> {}
                     case 0 -> {
