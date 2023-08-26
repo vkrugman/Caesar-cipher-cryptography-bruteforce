@@ -1,25 +1,29 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class EncryptionManager {
     public static void encrypt(boolean flag) {
-        String src = "resources/original.txt";
-        String dest = flag ? "resources/encrypted.txt" : "resources/decrypted.txt";
 
-        Utils.printText("Введите ключ шифрования (целое число):");
+        Path src = Path.of("resources/original.txt");
+        Path dest = Path.of(flag ? "resources/encrypted.txt" : "resources/decrypted.txt");
+
+        System.out.println("Введите ключ шифрования (целое число):");
         int key = Utils.inputInt();
 
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(src));
-             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(dest))) {
-
+        try (BufferedReader bufferedReader = Files.newBufferedReader(src, StandardCharsets.UTF_8);
+             BufferedWriter bufferedWriter = Files.newBufferedWriter(dest, StandardCharsets.UTF_8)) {
             while (bufferedReader.ready()) {
                 String text = bufferedReader.readLine();
-                bufferedWriter.write(flag ? CaesarCipher.cipher(text, key) : CaesarCipher.decipher(text, key));
+                bufferedWriter.write(flag ? CaesarCipher.encrypt(text, key) : CaesarCipher.decrypt(text, key));
                 bufferedWriter.newLine();
             }
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Возникла ошибка во время чтения/записи файла: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

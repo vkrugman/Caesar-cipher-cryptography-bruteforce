@@ -3,7 +3,7 @@ public class CaesarCipher {
             + "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
             + ".,”:-!? ";
 
-    public static String cipher(String text, int offset) {
+    public static String encrypt(String text, int offset) {
         if (offset == 0) {
             return text;
         }
@@ -23,7 +23,6 @@ public class CaesarCipher {
                     newAlphabetPosition = originalAlphabetPosition >= shift
                             ? (originalAlphabetPosition - shift)
                             : ALPHABET.length() - (shift - originalAlphabetPosition) % ALPHABET.length();
-
                     result.append(ALPHABET.charAt(newAlphabetPosition));
                 }
             } else {
@@ -33,12 +32,12 @@ public class CaesarCipher {
         return result.toString();
     }
 
-    public static String decipher(String text, int offset) {
+    public static String decrypt(String text, int offset) {
         if (offset == 0) {
             return text;
         }
 
         offset = offset > 0 ? (ALPHABET.length() - (offset % ALPHABET.length())) : (-offset % ALPHABET.length());
-        return cipher(text, offset);
+        return encrypt(text, offset);
     }
 }

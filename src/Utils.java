@@ -1,9 +1,6 @@
 import java.util.Scanner;
 
 public class Utils {
-    public static void printText(String text) {
-        System.out.println(text);
-    }
 
     public static int inputInt() {
         int input = 0;
@@ -12,7 +9,7 @@ public class Utils {
         try {
             input = scanner.nextInt();
         } catch (RuntimeException e) {
-            Utils.printText("Необходимо вводить целые числа !\n");
+            System.out.println(("Необходимо вводить целые числа!\n"));
         }
 
         return input;
