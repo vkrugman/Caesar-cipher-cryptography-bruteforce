@@ -7,6 +7,7 @@ public class Main {
             0. Выход""";
 
     public static void main(String[] args) {
+        EncryptionManager manager = new EncryptionManager();
 
         while (true) {
             System.out.println(MENU);
@@ -14,7 +15,7 @@ public class Main {
             switch (Utils.inputInt()) {
                 case 1 -> EncryptionManager.encrypt(true);
                 case 2 -> EncryptionManager.encrypt(false);
-                case 3 -> {}
+                case 3 -> EncryptionManager.bruteForce();
                 case 0 -> {
                     System.out.println("Работа с программой завершена");
                     return;

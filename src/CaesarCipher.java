@@ -1,3 +1,9 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
+
 public class CaesarCipher {
     private static final String ALPHABET = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
             + "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
@@ -12,7 +18,7 @@ public class CaesarCipher {
 
         for (char symbol : text.toCharArray()) {
             int originalAlphabetPosition = ALPHABET.indexOf(symbol);
-            int newAlphabetPosition = -1;
+            int newAlphabetPosition;
 
             if (originalAlphabetPosition >= 0) {
                 if (offset > 0) {
@@ -39,5 +45,40 @@ public class CaesarCipher {
 
         offset = offset > 0 ? (ALPHABET.length() - (offset % ALPHABET.length())) : (-offset % ALPHABET.length());
         return encrypt(text, offset);
+    }
+
+    public static int keyCheck(Path src) {
+        int key = Integer.MIN_VALUE;
+
+        for (int i = 1; i <= ALPHABET.length(); i++) { //todo negative key
+            try (BufferedReader bufferedReader = Files.newBufferedReader(src)) {
+                while (bufferedReader.ready()) {
+                    String decryptedStr = decrypt(bufferedReader.readLine(), i);
+
+                    if (isCorrectPunctuation(decryptedStr)) {
+                        key = i;
+                        i = ALPHABET.length();
+                        break;
+                    }
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return key;
+    }
+
+    public static boolean isCorrectPunctuation(String text) { //todo private
+        List<String> keys = List.of(". ", ", ", " ”", "” ", ": ", " - ", "! ", "? ");
+        boolean isCorrect = false;
+
+        for (String key : keys) {
+            isCorrect = text.contains(key);
+
+            if (isCorrect) {
+                break;
+            }
+        }
+        return isCorrect;
     }
 }
