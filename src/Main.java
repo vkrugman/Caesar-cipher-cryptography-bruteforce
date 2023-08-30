@@ -1,5 +1,6 @@
 public class Main {
-    public static final String MENU = """
+    private static final String MENU = """
+                        
             Выбери режим работы:
             1. Шифрование
             2. Расшифровка
@@ -7,7 +8,6 @@ public class Main {
             0. Выход""";
 
     public static void main(String[] args) {
-        EncryptionManager manager = new EncryptionManager();
 
         while (true) {
             System.out.println(MENU);
