@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Utils {
@@ -7,8 +8,9 @@ public class Utils {
 
         try {
             input = scanner.nextInt();
-        } catch (RuntimeException e) {
-            System.out.println(("Необходимо вводить целые числа!\n"));
+        } catch (InputMismatchException e) {
+            System.out.println("Необходимо вводить только целые числа!");
+            System.out.println("Допустимый диапазон: от " + Integer.MIN_VALUE + " до " + Integer.MAX_VALUE);
         }
         return input;
     }
